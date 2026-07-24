@@ -121,6 +121,7 @@ class AVAudioPlayerNodePool: @unchecked Sendable, Loggable {
     }
 
     func setMaximumFramesToRender(_ maxFrames: AUAudioFrameCount) {
+        guard #available(macOS 13, *) else { return }
         executionQueue.sync {
             mixerNode.auAudioUnit.maximumFramesToRender = maxFrames
             for item in items {

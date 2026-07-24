@@ -172,7 +172,9 @@ extension SoundPlayer {
         playerNodePool.stop()
         engine.stop()
         engine.disconnect(playerNodePool)
-        playerNodePool.setMaximumFramesToRender(engine.outputNode.auAudioUnit.maximumFramesToRender)
+        if #available(macOS 13, *) {
+            playerNodePool.setMaximumFramesToRender(engine.outputNode.auAudioUnit.maximumFramesToRender)
+        }
         engine.connect(playerNodePool, to: engine.mainMixerNode,
                        format: outputFormat, playerNodeFormat: playerNodeFormat)
         try engine.start()
